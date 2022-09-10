@@ -1,0 +1,52 @@
+{% extends "AppCasa/plantilla_base.html" %}
+
+{% block style_block %}
+<style>
+  table.coder-table {
+    border:3px solid;
+  }
+  th,
+  td {
+    border:1px solid;
+    padding:5px 10px;
+  }
+</style>
+{% endblock style_block %}
+
+{% block contenido_base %}
+
+<h1>Hechizos</h1>
+<a href="{% url 'crear_hechizo' %}">Agregar un hechizo</a>
+
+
+<br><br>
+<h3>Hechizos:</h3>
+
+<table border="2">
+
+    <tr>
+      <td>
+        <b>Nombre</b>
+      </td>
+      <td>
+        <b>Descripcion</b>
+      </td>
+      <td>
+        <b>Editar</b>
+      </td>
+      <td>
+        <b>Eliminar</b>
+      </td>
+    </tr>
+    {% for hechizo in object_list %}
+    <tr>
+      <td>{{hechizo.nombre}}</td>
+      <td>{{hechizo.descripcion}}</td>
+      <td><a href="{% url 'editar_hechizo' hechizo.id %}">Editar</a></td>
+      <td><a href="{% url 'eliminar_hechizo' hechizo.id %}">Eliminar</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock contenido_base %}

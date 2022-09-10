@@ -1,0 +1,11 @@
+{% extends "AppCasa/plantilla_base.html" %}
+
+{% block contenido_base %}
+<span>Vas a eliminar a {{object}}</span>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Confirmo eliminación" />
+</form>
+{% endblock contenido_base %}

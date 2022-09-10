@@ -2,15 +2,18 @@ from typing import Dict
 
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from AppCasa.models import Casas, Estudiantes,Profesores
+from AppCasa.models import Casas, Estudiantes,Profesores, Hechizos
 from AppCasa.forms import CasasFormulario, EstudiantesFormulario, ProfesoresFormulario
 from django.urls import reverse, reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+
+
 
 def inicio(request):
 
     return render(request, "AppCasa/inicio.html")
 
-
+#Casas
 
 def casas(request):
     casas = Casas.objects.all()
@@ -41,7 +44,7 @@ def buscar(request):
     else:
             return render(request, "AppCasa/casas.html", {'cursos': []})
 
-
+#Profesores
 def profesores(request):
     profesores = Profesores.objects.all()
     contexto={'profesores':profesores}
@@ -99,6 +102,7 @@ def actualizar_profesor(request,id):
             formulario= ProfesoresFormulario(initial=inicial)  
     return render(request, "AppCasa/form_profesores.html", {"formulario": formulario})
 
+#Estudiantes
 def estudiantes(request):
     estudiantes = Estudiantes.objects.all()  
     return render(request, "AppCasa/estudiantes.html",{'estudiantes':estudiantes})
@@ -117,4 +121,22 @@ def estudiantes_formulario(request):
     return render(request, "AppCasa/form_estudiantes.html",{"formulario": formulario})
 
 
+#Hechizos
 
+class HechizosListView(ListView):
+    model=Hechizos
+    template_name='AppCasa/hechizos.html'
+
+class HechizosCreateView(CreateView):
+    model=Hechizos
+    fields=['nombre','descripcion']
+    success_url=reverse_lazy('hechizos')
+
+class HechizosUpdateView(UpdateView):
+    model = Hechizos
+    fields = ['nombre', 'descripcion']
+    success_url = reverse_lazy('hechizos')
+
+class HechizosDeleteView(DeleteView):
+    model = Hechizos
+    success_url = reverse_lazy('hechizos')
