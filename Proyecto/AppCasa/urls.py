@@ -22,4 +22,7 @@ urlpatterns = [
     path('crear-hechizo/', views.HechizosCreateView.as_view(), name="crear_hechizo"),
     path('editar-hechizo/<int:pk>/', views.HechizosUpdateView.as_view(), name="editar_hechizo"),
     path('eliminar-hechizo/<int:pk>/', views.HechizosDeleteView.as_view(), name="eliminar_hechizo"),
+
+    #Registro
+    path('register/', views.register, name = 'register'),
 ]

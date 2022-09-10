@@ -3,10 +3,15 @@ from typing import Dict
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from AppCasa.models import Casas, Estudiantes,Profesores, Hechizos
-from AppCasa.forms import CasasFormulario, EstudiantesFormulario, ProfesoresFormulario
+from AppCasa.forms import CasasFormulario, EstudiantesFormulario, ProfesoresFormulario, UserRegisterForm
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
+#Para el login
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def inicio(request):
@@ -140,3 +145,23 @@ class HechizosUpdateView(UpdateView):
 class HechizosDeleteView(DeleteView):
     model = Hechizos
     success_url = reverse_lazy('hechizos')
+
+#Registro
+
+def register(request):
+    mensaje = ''
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return render(request, "AppCasa/inicio.html", {"mensaje": "El registro fue realizado con éxito"})
+        else:
+            mensaje = 'Error detectado en el registro'
+    formulario = UserRegisterForm()  # Formulario vacio para construir el html
+    context = {
+        'form': formulario,
+        'mensaje': mensaje
+    }
+
+    return render(request, "AppCasa/registro.html", context=context)
