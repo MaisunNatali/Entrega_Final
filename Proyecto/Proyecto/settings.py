@@ -55,7 +55,15 @@ ROOT_URLCONF = 'Proyecto.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['AppCasa/casas.html',
+                'AppCasa/estudiantes.html',
+                'AppCasa/form_busqueda_casas.html',
+                'AppCasa/form_casas.html',
+                'AppCasa/form_estudiantes.html',
+                'AppCasa/form_profesores.html',
+                'AppCasa/inicio.html',
+                'AppCasa/plantilla_base.html',
+                'AppCasa/profesores.html'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -63,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
             ],
         },
     },
