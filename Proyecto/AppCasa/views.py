@@ -1,25 +1,20 @@
 from typing import Dict
 
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from AppCasa.models import Casas, Estudiantes,Profesores
 from AppCasa.forms import CasasFormulario, EstudiantesFormulario, ProfesoresFormulario
+from django.urls import reverse, reverse_lazy
 
 def inicio(request):
 
     return render(request, "AppCasa/inicio.html")
 
-def estudiantes(request):
-    estudiantes = Estudiantes.objects.all()  
-    return render(request, "AppCasa/estudiantes.html",{'estudiantes':estudiantes})
+
 
 def casas(request):
     casas = Casas.objects.all()
     return render(request, "AppCasa/casas.html",{'casas': casas})
-
-def profesores(request):
-    profesores = Profesores.objects.all()
-    return render(request, "AppCasa/profesores.html",{'profesores': profesores})
 
 def casas_formulario(request):
     if request.method == 'POST':
@@ -34,18 +29,27 @@ def casas_formulario(request):
             formulario= CasasFormulario()  # Formulario vacio para construir el html
     return render(request, "AppCasa/form_casas.html", {"formulario": formulario})
 
-def estudiantes_formulario(request):
-    if request.method == 'POST':
-            formulario= EstudiantesFormulario(request.POST)
+def busqueda_casas(request):
+    return render(request, "AppCasa/form_busqueda_casas.html")
 
-            if formulario.is_valid():
-                data = formulario.cleaned_data
-                estudiante = Estudiantes(nombre=data['nombre'], apellido=data['apellido'],casa=data['casa'])
-                estudiante.save()
-                return render(request, "AppCasa/inicio.html",{"exitoso": True})
-    else:  # GET
-            formulario= EstudiantesFormulario()  # Formulario vacio para construir el html
-    return render(request, "AppCasa/form_estudiantes.html",{"formulario": formulario})
+
+def buscar(request):
+    if request.GET["nombre"]:
+            nombre = request.GET["nombre"]
+            casas = Casas.objects.filter(nombre__icontains=nombre)
+            return render(request, "AppCasa/casas.html", {'casas': casas})
+    else:
+            return render(request, "AppCasa/casas.html", {'cursos': []})
+
+
+def profesores(request):
+    profesores = Profesores.objects.all()
+    contexto={'profesores':profesores}
+    borrado=request.GET.get('borrado',None)
+    contexto['borrado']=borrado
+    actualizado=request.GET.get('actualizado',None)
+    contexto['actualizado']=actualizado   
+    return render(request, "AppCasa/profesores.html",contexto)
 
 def profesores_formulario(request):
     if request.method == 'POST':
@@ -60,14 +64,57 @@ def profesores_formulario(request):
             formulario= ProfesoresFormulario()  # Formulario vacio para construir el html
     return render(request, "AppCasa/form_profesores.html", {"formulario": formulario})
 
-def busqueda_casas(request):
-      return render(request, "AppCasa/form_busqueda_casas.html")
+def eliminar_profesor(request,id):
+    profesor= Profesores.objects.get(id=id)
+    borrado_id=profesor.id
+    profesor.delete()
+    url_final=f"{reverse('profesores')}?borrado={borrado_id}"
+    return redirect(url_final)
+
+def actualizar_profesor(request,id):
+
+    profesor=Profesores.objects.get(id=id)
+    actualizado_id=profesor.id
+    
+    if request.method == 'POST':
+            formulario= ProfesoresFormulario(request.POST)
+
+            if formulario.is_valid():
+                data = formulario.cleaned_data
+                profesor.nombre=data['nombre']
+                profesor.apellido=data['apellido']
+                profesor.materia=data['materia']
+                profesor.casa=data['casa']
+                profesor.save()
+            url_final=f"{reverse('profesores')}?actualizado={actualizado_id}"    
+            return redirect(url_final)
+    else:  # GET
+            inicial={
+                'nombre':profesor.nombre,
+                'apellido':profesor.apellido,
+                'materia':profesor.materia,
+                'casa':profesor.casa
+            }
+
+            formulario= ProfesoresFormulario(initial=inicial)  
+    return render(request, "AppCasa/form_profesores.html", {"formulario": formulario})
+
+def estudiantes(request):
+    estudiantes = Estudiantes.objects.all()  
+    return render(request, "AppCasa/estudiantes.html",{'estudiantes':estudiantes})
+
+def estudiantes_formulario(request):
+    if request.method == 'POST':
+            formulario= EstudiantesFormulario(request.POST)
+
+            if formulario.is_valid():
+                data = formulario.cleaned_data
+                estudiante = Estudiantes(nombre=data['nombre'], apellido=data['apellido'],casa=data['casa'])
+                estudiante.save()
+                return render(request, "AppCasa/inicio.html",{"exitoso": True})
+    else:  # GET
+            formulario= EstudiantesFormulario()  # Formulario vacio para construir el html
+    return render(request, "AppCasa/form_estudiantes.html",{"formulario": formulario})
 
 
-def buscar(request):
-      if request.GET["nombre"]:
-            nombre = request.GET["nombre"]
-            casas = Casas.objects.filter(nombre__icontains=nombre)
-            return render(request, "AppCasa/casas.html", {'casas': casas})
-      else:
-            return render(request, "AppCasa/casas.html", {'cursos': []})
+

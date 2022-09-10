@@ -15,6 +15,14 @@
 
 {% block contenido_base %}
 
+{% if borrado %}
+<div class="eliminado">Fue eliminado exitosamente el profesor de ID: {{ borrado }}</div>
+{% endif %}
+
+{% if actualizado %}
+<div class="actualizar">Fueron actualizados con exito los datos del profesor ID: {{actualizado}}</div>
+{% endif %}
+
 <h1>Profesores</h1>
 <a href="{% url 'profesores_formulario' %}">Agregar un profesor</a>
 
@@ -37,6 +45,12 @@
       <td>
         <b>Casa</b>
       </td>
+      <td>
+        <b>Actualizar</b>
+      </td>
+      <td>
+        <b>Eliminar</b>
+      </td>
     </tr>
     {% for profesor in profesores %}
     <tr>
@@ -44,6 +58,8 @@
       <td>{{profesor.apellido}}</td>
       <td>{{profesor.materia}}</td>
       <td>{{profesor.casa}}</td>
+      <td><a href="{% url 'actualizar_profesor' profesor.id %}">Actualizar</a></td>
+      <td><a href="{% url 'eliminar_profesor' profesor.id %}">Eliminar</a></td>
     </tr>
     {% endfor %}
   </tbody>
