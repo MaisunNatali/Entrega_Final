@@ -7,7 +7,11 @@
 {% if exitoso %}
 <div style="background-color:#D4AF37;">Has guardado los datos de forma correcta</div>
 {% endif %}
+{% if user.is_authenticated %}
 
+{% else %}
+<a href="{% url 'login' %}">Iniciar sesión</a>
+{% endif %}
 
 
 {% endblock contenido_base %}

@@ -25,4 +25,9 @@ urlpatterns = [
 
     #Registro
     path('register/', views.register, name = 'register'),
+
+    #Login y logout
+    path('login/', views.login_request, name = 'login'),  
+    path('logout/', views.CustomLogoutView.as_view(), name = 'logout'),
+
 ]

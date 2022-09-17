@@ -10,6 +10,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 #Para el login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.views import LogoutView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -165,3 +166,31 @@ def register(request):
     }
 
     return render(request, "AppCasa/registro.html", context=context)
+
+#Login y Logout
+
+def login_request(request):
+    next_url = request.GET.get('next')
+    if request.method == "POST":
+        form = AuthenticationForm(request, data = request.POST)
+        if form.is_valid():
+            usuario = form.cleaned_data.get('username')
+            contra = form.cleaned_data.get('password')
+            user = authenticate(username=usuario, password=contra)
+            if user:
+                login(request=request, user=user)
+                if next_url:
+                    return redirect(next_url)
+                return render(request, "AppCasa/inicio.html", {"mensaje":f"Bienvenido {usuario}"})
+            else:
+                return render(request,"AppCasa/inicio.html", {"mensaje":"Error, vuelva a intentarlo"})
+        else:
+            return render(request,"AppCasa/inicio.html", {"mensaje":"Error, vuelva a intetarlo"})
+
+    form = AuthenticationForm()
+    return render(request,"AppCasa/login.html", {'form':form} )
+
+
+class CustomLogoutView(LogoutView):
+    template_name = 'AppCasa/logout.html'
+    next_page = reverse_lazy('logout')

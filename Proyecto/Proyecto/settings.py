@@ -63,7 +63,13 @@ TEMPLATES = [
                 'AppCasa/form_profesores.html',
                 'AppCasa/inicio.html',
                 'AppCasa/plantilla_base.html',
-                'AppCasa/profesores.html'],
+                'AppCasa/profesores.html',
+                'AppCasa/hechizos_confirm_delete.html',
+                'AppCasa/hechizos_form.html',
+                'AppCasa/hechizos.html'
+                'AppCasa/login.html',
+                'AppCasa/logout.html',
+                'AppCasa/registro.html'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
