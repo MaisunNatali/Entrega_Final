@@ -3,9 +3,10 @@ from typing import Dict
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from AppCasa.models import Casas, Estudiantes,Profesores, Hechizos
-from AppCasa.forms import CasasFormulario, EstudiantesFormulario, ProfesoresFormulario, UserRegisterForm
+from AppCasa.forms import CasasFormulario, EstudiantesFormulario, ProfesoresFormulario, UserRegisterForm,UserUpdateForm
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.models import User
 
 #Para el login
 from django.contrib.auth.forms import AuthenticationForm
@@ -185,7 +186,7 @@ def login_request(request):
             else:
                 return render(request,"AppCasa/inicio.html", {"mensaje":"Error, vuelva a intentarlo"})
         else:
-            return render(request,"AppCasa/inicio.html", {"mensaje":"Error, vuelva a intetarlo"})
+            return render(request,"AppCasa/inicio.html", {"mensaje":"Error, vuelva a intentarlo"})
 
     form = AuthenticationForm()
     return render(request,"AppCasa/login.html", {'form':form} )
@@ -194,3 +195,13 @@ def login_request(request):
 class CustomLogoutView(LogoutView):
     template_name = 'AppCasa/logout.html'
     next_page = reverse_lazy('logout')
+
+# Editar datos de usuario
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = UserUpdateForm
+    success_url = reverse_lazy('inicio')
+    template_name = 'AppCasa/form_perfil.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user

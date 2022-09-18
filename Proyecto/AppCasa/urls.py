@@ -30,4 +30,7 @@ urlpatterns = [
     path('login/', views.login_request, name = 'login'),  
     path('logout/', views.CustomLogoutView.as_view(), name = 'logout'),
 
+    #Editar datos de perfil
+    path('editar-perfil/', views.ProfileUpdateView.as_view(), name="editar_perfil"),
+
 ]
