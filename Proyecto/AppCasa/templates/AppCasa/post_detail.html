@@ -1,0 +1,8 @@
+{% extends "AppCasa/plantilla_base.html" %}
+
+{% block contenido_base %}
+
+{{post.title}}
+{{post.content|truncatechars:50}}
+
+{% endblock contenido_base %}

@@ -2,10 +2,11 @@ from typing import Dict
 
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from AppCasa.models import Casas, Estudiantes,Profesores, Hechizos
+from AppCasa.models import Casas, Estudiantes,Profesores, Hechizos, Category,Post
 from AppCasa.forms import CasasFormulario, EstudiantesFormulario, ProfesoresFormulario, UserRegisterForm,UserUpdateForm
 from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView,TemplateView
+from django.views.generic.detail import DetailView
 from django.contrib.auth.models import User
 
 #Para el login
@@ -205,3 +206,21 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+# Entradas de blog
+class BlogHomePageView(TemplateView):
+    template_name="AppCasa/blog.html"
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(**kwargs)
+        context['posts']=Post.postobjects.all()
+        return context
+    
+#Mostrar un blog especifico
+class PostDetailView(DetailView):
+    model=Post
+    template_name= 'AppCasa/post_detail.html'
+    
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(**kwargs)
+        context['post']=Post.objects.filter(slug=self.kwargs.get('slug'))
+        return context

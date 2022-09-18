@@ -1,0 +1,10 @@
+{% extends "AppCasa/plantilla_base.html" %}
+
+{% block contenido_base %}
+{%for post in posts %}
+<a href="{% url 'post_detail' slug=post.slug %}">
+{{post.title}}
+{{post.excerpt|truncatechars:50}}
+</a>
+{% endfor %}
+{% endblock contenido_base %}

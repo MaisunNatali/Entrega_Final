@@ -27,10 +27,16 @@ urlpatterns = [
     path('register/', views.register, name = 'register'),
 
     #Login y logout
-    path('login/', views.login_request, name = 'login'),  
+    path('accounts/login//', views.login_request, name = 'login'),  
     path('logout/', views.CustomLogoutView.as_view(), name = 'logout'),
 
     #Editar datos de perfil
-    path('editar-perfil/', views.ProfileUpdateView.as_view(), name="editar_perfil"),
+    path('accounts/profile/', views.ProfileUpdateView.as_view(), name="editar_perfil"),
+
+    #Blog
+    path('blog/', views.BlogHomePageView.as_view(), name="blog_home"),
+
+    #Ver un post especifico
+    path('<slug>/', views.PostDetailView.as_view(), name="post_detail"),
 
 ]
