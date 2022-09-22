@@ -51,8 +51,8 @@ class Post(models.Model):
     content=models.TextField()
     slug=models.SlugField(max_length=250,null=False, unique=True)
     published=models.DateTimeField(default=timezone.now)
-    author=models.ForeignKey(User,on_delete=models.CASCADE,related_name='blog_post')
+    author=models.CharField(max_length=60)
     imagen = models.ImageField(upload_to='post', null=True, blank = True)
-    
+
     def __str__(self) -> str:
         return f' {self.title} de {self.author}'

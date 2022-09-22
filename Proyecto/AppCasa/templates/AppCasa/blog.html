@@ -2,19 +2,22 @@
 
 {% block contenido_base %}
 <h2>Artículos:</h2>
+
 {% if posts %}
-    {%for post in posts %}
-        <a href="{% url 'post_detail' slug=post.slug %}">
-            <font  " face="verdana, arial, helvetica" size=4>
-                <b>{{post.title}}</b>: {{post.subtitle}}
-            </font>
-        </a>
-    {% endfor %}
-{% else %}
+        {%for post in posts %}
+            <a href="{% url 'post_detail' slug=post.slug %}">
+                <font  " face="verdana, arial, helvetica" size=4>
+                    <br><b>{{post.title}}</b>: {{post.subtitle}}</br>
+                </font>
+            </a>
+        {% endfor %}
+    {% else %}
 
-<h3>No hay entregas aún</h3>
+        <h3>No hay entregas aún</h3>
 
-{% endif %}
+    {% endif %}
+
+<h5><a href="{% url 'post_create' %}">Crear un articulo</a></h5>
 
 
 {% endblock contenido_base %} 

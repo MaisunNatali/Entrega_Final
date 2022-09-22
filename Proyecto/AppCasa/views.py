@@ -3,9 +3,9 @@ from typing import Dict
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from AppCasa.models import Casas, Estudiantes,Profesores, Hechizos ,Post
-from AppCasa.forms import CasasFormulario, EstudiantesFormulario, ProfesoresFormulario, UserRegisterForm,UserUpdateForm
+from AppCasa.forms import CasasFormulario, EstudiantesFormulario, ProfesoresFormulario, UserRegisterForm,UserUpdateForm, PostForm
 from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView,TemplateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView,TemplateView,DetailView
 from django.contrib.auth.models import User
 
 #Para el login
@@ -215,6 +215,19 @@ class BlogHomePageView(TemplateView):
         return context
     
 #Mostrar un blog especifico
-def post(request,slug):
-    blog = Post.objects.get(slug=slug)  
-    return render(request, "AppCasa/post_detail.html",{'post':blog})
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'AppCasa/post_detail.html'
+
+#Crear un blog
+class PostCreateView(CreateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'AppCasa/post_create.html'
+    success_url = reverse_lazy('inicio')
+
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        
+        return super(PostCreateView, self).form_valid(form)
