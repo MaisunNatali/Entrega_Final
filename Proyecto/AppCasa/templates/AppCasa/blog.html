@@ -1,10 +1,20 @@
 {% extends "AppCasa/plantilla_base.html" %}
 
 {% block contenido_base %}
-{%for post in posts %}
-<a href="{% url 'post_detail' slug=post.slug %}">
-{{post.title}}
-{{post.excerpt|truncatechars:50}}
-</a>
-{% endfor %}
-{% endblock contenido_base %}
+<h2>Artículos:</h2>
+{% if posts %}
+    {%for post in posts %}
+        <a href="{% url 'post_detail' slug=post.slug %}">
+            <font  " face="verdana, arial, helvetica" size=4>
+                <b>{{post.title}}</b>: {{post.subtitle}}
+            </font>
+        </a>
+    {% endfor %}
+{% else %}
+
+<h3>No hay entregas aún</h3>
+
+{% endif %}
+
+
+{% endblock contenido_base %} 

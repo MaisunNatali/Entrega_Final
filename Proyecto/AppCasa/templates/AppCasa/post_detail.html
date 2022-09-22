@@ -1,8 +1,34 @@
 {% extends "AppCasa/plantilla_base.html" %}
 
 {% block contenido_base %}
+<h1>{{post.title}}</h1>
 
-{{post.title}}
-{{post.content|truncatechars:50}}
 
-{% endblock contenido_base %}
+<br>Autor:{{post.author}}</br>
+<br>Fecha de publicación:{{post.published}}</br>
+
+
+<table width="500" cellspacing="1" cellpadding="4" border="0" bgcolor="#263238 ">
+    <tr>
+        <td bgcolor="#263238 ">
+        <font color="#E0E0E0 " face="verdana, arial, helvetica" size=2>
+            {{post.subtitle}}
+        </font>
+        </td>
+    </tr>
+    </table>
+
+<br><img src="{{ post.imagen.url }}" /></br>
+
+<br><table width="1000" cellspacing="1" cellpadding="4" border="0" bgcolor="#E0E0E0">
+    <tr>
+        <td bgcolor="#E0E0E0">
+        <font face="verdana, arial, helvetica" size=2>
+        {{post.content}}
+        </font>
+        </td>
+    </tr>
+    </table>
+</br>
+
+{% endblock contenido_base %} 

@@ -36,7 +36,7 @@ urlpatterns = [
     #Blog
     path('blog/', views.BlogHomePageView.as_view(), name="blog_home"),
 
-    #Ver un post especifico
-    path('<slug>/', views.PostDetailView.as_view(), name="post_detail"),
+    # #Ver un post especifico
+    path('<slug>/', views.post, name="post_detail"),
 
 ]
