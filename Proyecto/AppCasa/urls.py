@@ -34,12 +34,16 @@ urlpatterns = [
     path('accounts/profile/', views.ProfileUpdateView.as_view(), name="editar_perfil"),
 
     #Blog
-    path('blog/', views.BlogHomePageView.as_view(), name="blog_home"),
+    path('post/', views.PostListView.as_view(), name="blog_home"),
 
     #Ver un post especifico
-    path('<slug>/', views.PostDetailView.as_view(), name="post_detail"),
+    path('<int:pk>/', views.PostDetailView.as_view(), name="post_detail"),
 
-    #Crear un post
+    #Crear un post y actualizar
     path('crear-blog/', views.PostCreateView.as_view(), name="post_create"),
+    path('editar-blog/<int:pk>/', views.PostUpdateView.as_view(), name="post_update"),
+
+    #Eliminar post
+    path('eliminar-blog/<int:pk>/', views.PostDeleteView.as_view(), name="post_delete"),
 
 ]

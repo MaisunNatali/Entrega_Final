@@ -36,9 +36,10 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['last_name', 'first_name', 'email']
-class PostForm(forms.ModelForm):
+        
+# class PostForm(forms.ModelForm):
 
-    class Meta:
-        model = Post
+#     class Meta:
+#         model = Post
 
-        fields = ['title', 'subtitle', 'content', 'slug']
+#         fields = ['title', 'subtitle', 'content', 'slug']
