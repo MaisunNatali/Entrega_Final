@@ -1,17 +1,28 @@
 {% extends "AppCasa/plantilla_base.html" %}
 
 {% block contenido_base %}
-<h1 style="color:#D4AF37"><div style="background-color:#000000;">Registro Colegio Hogwarts de Magia y Hechicería</div></h1>
+
+<img src="{{picture.imagen.url}}"  class="rounded mx-auto d-block" />
+<div align=center>
+<h1 style="color:#D4AF37"  ><div    style="background-color:#000000;" >Registro Colegio Hogwarts de Magia y Hechicería</div></h1>
+</div>
+
+
 
 <!-- Cuerpo-->
 {% if exitoso %}
 <div style="background-color:#D4AF37;">Has guardado los datos de forma correcta</div>
 {% endif %}
 {% if user.is_authenticated %}
-<img src="{{ user.avatar.imagen.url }}" />
+<div align=center>
+<h3 style="color:#212F3D">Esperamos que disfrutes esta experiencia {{user}} </h3>
+</div>
+<img src="{{ user.avatar.imagen.url }}"  class="rounded mx-auto d-block" />
 {% else %}
 <a href="{% url 'login' %}">Iniciar sesión</a>
+
 {% endif %}
+
 
 
 {% endblock contenido_base %}

@@ -2,7 +2,7 @@ from typing import Dict
 
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from AppCasa.models import Casas, Estudiantes,Profesores, Hechizos ,Post
+from AppCasa.models import Casas, Estudiantes,Profesores, Hechizos ,Post,Inicio
 from AppCasa.forms import CasasFormulario, EstudiantesFormulario, ProfesoresFormulario, UserRegisterForm,UserUpdateForm #, PostForm
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView,TemplateView,DetailView
@@ -17,8 +17,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def inicio(request):
-
-    return render(request, "AppCasa/inicio.html")
+    picture=Inicio.objects.get(id=1)
+    return render(request, "AppCasa/inicio.html",{'picture': picture})
 
 #Casas
 
@@ -207,15 +207,12 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
 # Entradas de blog
-# class BlogHomePageView(TemplateView):
-#     template_name="AppCasa/blog.html"
-#     def get_context_data(self, **kwargs):
-#         context=super().get_context_data(**kwargs)
-#         context['posts']=Post.objects.all()
-#         return context
+
 class PostListView(ListView):
     model=Post
     template_name='AppCasa/post.html'
+
+
     
 #Mostrar un blog especifico
 class PostDetailView(DetailView):
@@ -226,18 +223,19 @@ class PostDetailView(DetailView):
 
 #Crear, actualizar y eliminar un blog
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin,CreateView):
     model = Post
-    fields = ['title', 'subtitle', 'content', 'slug']
+    fields = ['title', 'subtitle', 'content', 'slug','author']
     success_url = reverse_lazy('inicio')
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin,UpdateView):
     model = Post
-    fields = ['title', 'subtitle', 'content', 'slug']
+    fields = ['title', 'subtitle', 'content', 'slug','author']
     success_url = reverse_lazy('inicio')
 
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin,DeleteView):
     model = Post
     success_url = reverse_lazy('inicio')
+

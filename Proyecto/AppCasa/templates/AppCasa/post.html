@@ -2,17 +2,24 @@
 {% extends "AppCasa/plantilla_base.html" %}
 {% load static %}
 {% block contenido_base %}
-<h2>Artículos:</h2>
+<br><button type="button" class="btn btn-outline-dark"><a href="{% url 'post_create' %}"><b style= "color:#000000 ">CREAR UN ARTÍCULO</a></b></button></br>
+<div align=center>
+    <h2 style="color:#D4AF37"  ><div    style="background-color:#000000;" >ÁRTICULOS</div></h2>
+    </div>
+
 
 {% if object_list %}
         {%for post in object_list %}
             
                 <font  " face="verdana, arial, helvetica" size=4>
-                    <b>{{post.title}}</b>: {{post.subtitle}}
-                    <a href="{% url 'post_update' post.id %}">Editar</a>
-                    <a href="{% url 'post_delete' post.id %}">Eliminar</a>
-                    <a href="{% url 'post_detail' post.id %}">Leer</a>
-                    </br>f
+                    <b>{{post.title}}</b>: 
+                    <br>{{post.subtitle}}</br>
+                    <br>{{post.content|truncatechars:200}}</br>
+
+                    <br><a  href="{% url 'post_update' post.id %}"><b style= "color:#229954">Editar</b></a>
+                    <a href="{% url 'post_delete' post.id %}"><b style= "color:#943126">Eliminar</b></a>
+                    <a href="{% url 'post_detail' post.id %}"><b style= "color:#D4AC0D">Leer</b></a></br>
+                    </br>
                     
                 </font>
             </a>
@@ -23,7 +30,7 @@
 
     {% endif %}
 
-<h5><a href="{% url 'post_create' %}">Crear un articulo</a></h5>
+
 
 
 {% endblock contenido_base %} 

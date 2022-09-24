@@ -56,3 +56,10 @@ class Post(models.Model):
 
     def __str__(self) -> str:
         return f' {self.title} de {self.author}'
+
+
+class Inicio(models.Model):
+    
+    imagen = models.ImageField(upload_to='inicio', null=True, blank = True)
+    def __str__(self):
+        return f"Imagen de inicio"
