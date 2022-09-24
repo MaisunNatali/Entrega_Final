@@ -12,13 +12,13 @@
         {%for post in object_list %}
             
                 <font  " face="verdana, arial, helvetica" size=4>
-                    <b>{{post.title}}</b>: 
+                    <b><h2>{{post.title}}:</h2></b> 
                     <br>{{post.subtitle}}</br>
                     <br>{{post.content|truncatechars:200}}</br>
 
-                    <br><a  href="{% url 'post_update' post.id %}"><b style= "color:#229954">Editar</b></a>
-                    <a href="{% url 'post_delete' post.id %}"><b style= "color:#943126">Eliminar</b></a>
-                    <a href="{% url 'post_detail' post.id %}"><b style= "color:#D4AC0D">Leer</b></a></br>
+                    <br><a  href="{% url 'post_update' post.id %}"><b style= "color:#000000">Editar</b></a>
+                    <a href="{% url 'post_delete' post.id %}"><b style= "color:#000000">Eliminar</b></a>
+                    <a href="{% url 'post_detail' post.id %}"><b style= "color:#000000">Leer</b></a></br>
                     </br>
                     
                 </font>

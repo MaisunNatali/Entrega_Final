@@ -57,9 +57,19 @@ class Post(models.Model):
     def __str__(self) -> str:
         return f' {self.title} de {self.author}'
 
-
+# Para colocar imagen en el inicio
 class Inicio(models.Model):
     
     imagen = models.ImageField(upload_to='inicio', null=True, blank = True)
     def __str__(self):
         return f"Imagen de inicio"
+
+class Creadores(models.Model):
+        
+    name=models.CharField(max_length=255)
+    lastname=models.CharField(max_length=255)
+    descripcion=models.CharField(max_length=255)
+    imagen = models.ImageField(upload_to='creador', null=True, blank = True)
+
+    def __str__(self) -> str:
+        return f' {self.name} {self.lastname}'

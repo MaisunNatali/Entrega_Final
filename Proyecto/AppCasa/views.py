@@ -2,7 +2,7 @@ from typing import Dict
 
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from AppCasa.models import Casas, Estudiantes,Profesores, Hechizos ,Post,Inicio
+from AppCasa.models import Casas, Estudiantes,Profesores, Hechizos ,Post,Inicio,Creadores
 from AppCasa.forms import CasasFormulario, EstudiantesFormulario, ProfesoresFormulario, UserRegisterForm,UserUpdateForm #, PostForm
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView,TemplateView,DetailView
@@ -239,3 +239,6 @@ class PostDeleteView(LoginRequiredMixin,DeleteView):
     model = Post
     success_url = reverse_lazy('inicio')
 
+class CreadoresListView(ListView):
+    model=Creadores
+    template_name='AppCasa/creadores.html'
