@@ -46,6 +46,6 @@ urlpatterns = [
     #Eliminar post
     path('eliminar-blog/<int:pk>/', views.PostDeleteView.as_view(), name="post_delete"),
     #About us
-    path(' aboutus/', views.CreadoresListView.as_view(), name="about_us"),
+    path(' about/', views.CreadoresListView.as_view(), name="about_us"),
 
 ]

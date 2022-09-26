@@ -18,7 +18,7 @@ class HechizosTestCase(TestCase):
 class PostTestCase(TestCase):
 
     def test_creacion_post(self):
-        # Test 1: Comprobar puedo crear un post sin imagen
+        # Test 1: Comprobar puedo crear un post sin imagen.Dado que solo puede subirse desde admin.
         title="Titulo prueba"
         subtitle="Subtitulo de prueba"
         content="Contenido de prueba"
@@ -32,7 +32,7 @@ class PostTestCase(TestCase):
 class CreadoresTestCase(TestCase):
 
     def test_creacion_creadores(self):
-        # Test 1: Comprobar puedo crear un post sin imagen
+        # Test 1: Comprobar puedo crear un post sin imagen. Dado que solo puede subirse desde admin.
         name="Nombre Prueba"
         lastname="Apellido Prueba"
         descripcion="Descripcion prueba"
